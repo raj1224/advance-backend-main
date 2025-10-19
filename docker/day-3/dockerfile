@@ -1,20 +1,41 @@
+# #base image
+# FROM ubuntu:latest
+
+# # Install Node.js
+# RUN apt-get update -y
+# RUN apt-get install -y curl
+# RUN curl -sl https://deb.nodesource.com/setup_18.x -o /tmp/nodesource_setup.sh
+# RUN bash /tmp/nodesource_setup.sh
+# RUN apt install -y nodejs
+
+# # Copy application files
+# COPY index.js /home/app/index.js
+# COPY package.json /home/app/package.json
+# COPY package-lock.json /home/app/package-lock.json
+
+# #Install dependencies
+# WORKDIR /home/app
+# RUN npm install
+
+# CMD ["npm","start"]
+
+
+
+# otpimized dockerfile for nodejs app
+
 #base image
-FROM ubuntu:latest
+FROM node:20.17.0-alpine3.19
 
-# Install Node.js
-RUN apt-get update -y
-RUN apt-get install -y curl
-RUN curl -sl https://deb.nodesource.com/setup_18.x -o /tmp/nodesource_setup.sh
-RUN bash /tmp/nodesource_setup.sh
-RUN apt install -y nodejs
+WORKDIR /home/app
 
-# Copy application files
-COPY index.js /home/app/index.js
-COPY package.json /home/app/package.json
-COPY package-lock.json /home/app/package-lock.json
+COPY package*.json .
+COPY Dockerfile Dockerfile
 
 #Install dependencies
-WORKDIR /home/app
 RUN npm install
+
+COPY index.js index.js
+
+EXPOSE 3000
 
 CMD ["npm","start"]
