@@ -70,6 +70,43 @@ async function main(){
     // HASHMAP
     await redis.hset('user:1000','name','Alice','age','30','city','New York');
 
-    await redis.hset('user:2000',{'name':'Bob','age':'25','city':'Los Angeles'});
+    await redis.hset('user:2000',
+        {
+            'name':'Bob',
+            'age':'25',
+            'city':'Los Angeles'
+        });
+
+    // Streams 
+    // const entryId= await redis.xadd('mystream','*',
+    //     'userId',
+    //     '123',
+    //     'action',
+    //     'purchase',
+    //     'product',
+    //     'laptop',
+    //     'amount',
+    //     '1200'
+    // );
+    // console.log('XADD Entry ID:', entryId
+    // );
+
+    // const entries = await redis.xread('STREAMS','mystream','0');
+    // // console.log('XREAD Entries:', JSON.stringify(entries));
+
+    // entries[0][1].forEach(([id,fields])=>{
+    //     const data ={};
+    //     for(let i=0;i<fields.length;i+=2){
+    //         data[fields[i]]=fields[i+1];
+    //     }
+    //     console.log(`ID: ${id}`,data);
+    // });
+
+    // const recentEntries = await redis.xrevrange('mystream','+','-','COUNT',5);
+
+    // const recentEntries = await redis.xrevrange('mystream',``);
+    // console.log('XREVRANGE Recent Entries:', recentEntries);
+
 }
 main();
+
